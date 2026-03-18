@@ -1,0 +1,13 @@
+# Env files
+.env
+.env.example
+
+# Data folder
+data/
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
