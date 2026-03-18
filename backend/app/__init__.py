@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_cors import CORS
 
@@ -17,17 +19,23 @@ def create_app() -> Flask:
     app.config["DEBUG"] = settings.DEBUG
     app.config["FLASK_PORT"] = settings.FLASK_PORT
 
+    # Allow configured frontend origin, local dev, and Vercel preview URLs.
+    extra_origins_env = os.getenv("FRONTEND_ORIGINS", "")
+    extra_origins = [item.strip() for item in extra_origins_env.split(",") if item.strip()]
+    allowed_origins = [
+        settings.FRONTEND_ORIGIN,
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        r"https://.*\.vercel\.app",
+        *extra_origins,
+    ]
+
     CORS(
         app,
-        resources={
-            r"/api/*": {
-                "origins": [
-                    settings.FRONTEND_ORIGIN,
-                    "http://localhost:5173",
-                    "http://127.0.0.1:5173",
-                ]
-            }
-        },
+        supports_credentials=True,
+        resources={r"/api/*": {"origins": allowed_origins}},
+        methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+        allow_headers=["Content-Type", "Authorization"],
     )
 
     sqlite_service = SQLiteService(str(settings.resolved_db_path))
