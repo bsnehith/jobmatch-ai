@@ -253,6 +253,24 @@ Observation: N/A
 
 ---
 
+## Screenshots
+
+> Place your screenshot files inside `docs/screenshots/` using the names below so they render on GitHub.
+
+### 1) Evaluation Form
+
+![Evaluation Form](docs/screenshots/p1.png)
+
+### 2) Final Result and Recommendation
+
+![Final Result](docs/screenshots/p2.png)
+
+### 3) ReAct Reasoning Trace
+
+![Reasoning Trace](docs/screenshots/p3.png)
+
+---
+
 ## Common Commands
 
 ### Backend
